@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Address unit tests should obtain complete address 1`] = `"{\\"street\\":\\"Street\\", \\"number\\":\\"n123\\", \\"zip\\":\\"75801360\\", \\"city\\":\\"Jataí\\"}"`;

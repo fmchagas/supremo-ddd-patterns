@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  supremo_ddd_app:
+    user: "1000"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: fmchagas/supremo_ddd_patterns
+    container_name: supremo_ddd_patterns
+    tty: true
+    ports:
+      - "3000:3000"
+      - "9229:9229"
+      - "9230:9230"
+    volumes:
+      - ./:/usr/supremo_ddd_patterns
+      # bind-mounting these two files in will let you add packages during development without rebuilding
+      # remember to install from the parent directory to the code bind-mount:
+      # docker compose exec -w /usr/supremo_ddd_patterns node npm install --save bower
+      - ./package.json:/usr/supremo_ddd_patterns/package.json
+      - ./package-lock.json:/usr/supremo_ddd_patterns/package-lock.json
+      # this is a workaround to prevent host node_modules from accidently getting mounted in container
+      # in case you want to use node/npm both outside container for test/lint etc. and also inside container
+      # this will overwrite the default node_modules dir in container so it won't conflict with our
+      - notused:/usr/supremo_ddd_patterns/node_modules
+
+volumes:
+  notused:

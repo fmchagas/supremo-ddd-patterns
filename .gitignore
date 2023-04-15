@@ -1,0 +1,22 @@
+# Dependency
+node_modules
+
+# Coverage directory
+coverage
+
+# Arquivos compilados
+dist
+
+# IDEs
+.vscode
+
+# Node Logs
+logs
+*.log
+npm-debug.log*
+
+# Optional
+index.js
+readme.txt
+tmp.*
+.npm
