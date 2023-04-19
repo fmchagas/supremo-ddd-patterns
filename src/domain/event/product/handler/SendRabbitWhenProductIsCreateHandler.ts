@@ -5,7 +5,7 @@ export default class SendRabbitWhenProductIsCreateHandler
  implements EventHandlerInterface<ProductCreatedEvent> {
     handle(event: ProductCreatedEvent): void {
         console.log(
-            `Publis message: name ${event.eventData.name}`
+            `Publis message: ${event.eventData.name}, ${event.eventData.description}, ${event.eventData.price}`
         )
     }
 }

@@ -58,6 +58,7 @@ describe("Domain events tests", function() {
         const eventHandler = new SendEmailWhenProductIsCreateHandler()
         const eventHandlerRabbit = new SendRabbitWhenProductIsCreateHandler()
         const spyEventHandler = jest.spyOn(eventHandler, "handle")
+        const spyEventHandler2 = jest.spyOn(eventHandlerRabbit, "handle")
 
         eventDispatcher.register("ProductCreatedEvent", eventHandler)
         eventDispatcher.register("ProductCreatedEvent", eventHandlerRabbit)
@@ -71,10 +72,14 @@ describe("Domain events tests", function() {
         })
 
 
-        // Quando o notify for executado o SendEmailWhenProductIsCreateHandler.handle() deve ser chamado
+        /*
+         Quando o notify for executado o SendEmailWhenProductIsCreateHandler.handle(),
+         SendRabbitWhenProductIsCreateHandler.handle() deve ser chamado
+        */
         eventDispatcher.notify(productCreatedEvent)
 
         expect(spyEventHandler).toHaveBeenCalled()
+        expect(spyEventHandler2).toHaveBeenCalled()
     })
     
 })
