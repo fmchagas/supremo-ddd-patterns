@@ -29,3 +29,29 @@ To connect into de container:
 To down container:
 
 - Execute `docker compose down`
+
+
+# Domain Events
+- "Use um evento de domínio para capturar uma ocorrência de algo que aconteceu no domínio" Vernon, Vaughn. Implementing DDD
+
+- "A essência de um evento de domíno é que você o usa para capturar coisas que podem desencadear uma mudança no estado do aplicativo que você está desenvolvendo..."
+Fowler, Martin. Domain Event
+
+- Todo envento deve ser representado em uma ação realizada no passado. UserCreated, OrderCreated, OrderPlaced, OrderPaid, OrderInvoiced, OrderDelivered
+
+## Quando utilizar
+
+Normalmento utilizamos quando queremos notificar outros Bounded Context de uma mudança de estado.
+
+## Componentes
+
+- Event: Tem data e hora e o que aconteuceu
+- Handler: Executa o processamento quando um evento é chamado(posso ter varios handles para um evento, Ex: evento Cria usuário handler Enviar email, handler Cadastra no CRM, handler Envia para mensageria)
+- Event Dispatcher: Responsável por armazenar e executar os handlers de um evento quando ele for disparado(registro todos os eventos e quais os handles do evento e posso notificar e os handles quando evento é disparado)
+
+### Dinâmica
+- Criar um `Event Dispatcher`
+- criar um `Evento`
+- criar um `Handler` para `Evento`
+- Registrar o `Evento`, juntamente com o `Handler` no `Event Disátcher`
+- Disparanto um evento, é só executar o método `notify/dispatcher/send` do `Event Dispatcher` e todos os `Handlers` registrado no evento serão executados
