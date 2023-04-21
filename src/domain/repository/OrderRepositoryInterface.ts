@@ -1,7 +1,5 @@
 import Order from "../entity/Order";
+import RepositoryInterface from "./RepositoryInterface";
 
-export default interface OrderRepositoryInterface {
-    create(entity: Order): Promise<void>
-    find(id: string): Promise<Order>
-    findAll(): Promise<Order[]>
+export default interface OrderRepositoryInterface extends RepositoryInterface<Order> {
 }

@@ -128,4 +128,102 @@ describe("Order repository tests", () => {
         expect(expectedOrders).toContainEqual(order)
         expect(expectedOrders).toContainEqual(order2)
     })
+
+    it("should update item in order", async () => {
+        const customerRepository = new CustomerRepository()
+        const customer = new Customer("11", "Fer")
+        const addres = new Address("Rua Fantasia", "26", "75804360", "Paralelo")
+        customer.address = addres
+        customer.activate()
+        customerRepository.create(customer)
+
+        const productRepository = new ProductRepository()
+        const product = new Product("1", "product-1", 1.25)
+        productRepository.create(product)
+
+        const orderItem = new OrderItem("1", product.id, product.price, 300)
+
+        const order = new Order("123", customer.id, [orderItem])
+
+        const orderRepository = new OrderRepository(sequelize)
+        await orderRepository.create(order)
+
+        const orderItemToUpdate = new OrderItem("1", product.id, product.price, 3)
+        const orderToUpdate = new Order("123", customer.id, [orderItemToUpdate])
+        await orderRepository.update(orderToUpdate)
+
+        const orderModel = await OrderModel.findOne({
+            where: { id: orderToUpdate.id },
+            include: ["items"],
+        })
+        
+        expect(orderModel.items.length).toBe(1)
+
+        expect(orderModel.toJSON()).toStrictEqual({
+            id: order.id,
+            customer_id: customer.id,
+            total: 3.75,
+            items: [{
+                id: orderItemToUpdate.id,
+                product_id: product.id,
+                order_id: orderToUpdate.id,
+                price: orderItemToUpdate.price,
+                quantity: orderItemToUpdate.quantity
+            }]
+        })
+    })
+
+    it("should update and add item in order", async () => {
+        const customerRepository = new CustomerRepository()
+        const customer = new Customer("11", "Fer")
+        const addres = new Address("Rua Fantasia", "26", "75804360", "Paralelo")
+        customer.address = addres
+        customer.activate()
+        customerRepository.create(customer)
+
+        const productRepository = new ProductRepository()
+        const product = new Product("1", "product-1", 1.25)
+        productRepository.create(product)
+
+        const product2 = new Product("2", "product-2", 2.00)
+        productRepository.create(product2)
+
+        const orderItem = new OrderItem("1", product.id, product.price, 20)
+        const order = new Order("321", customer.id, [orderItem])
+
+        const orderRepository = new OrderRepository(sequelize)
+        await orderRepository.create(order)
+
+
+        const orderItemToUpdate = new OrderItem("1", product.id, product.price, 1)
+        const orderItemToAdd = new OrderItem("2", product2.id, product2.price, 2)
+        const orderToUpdate = new Order("321", customer.id, [orderItemToUpdate, orderItemToAdd])
+        await orderRepository.update(orderToUpdate)
+
+        const orderModel = await OrderModel.findOne({
+            where: { id: orderToUpdate.id },
+            include: ["items"],
+        })
+        
+        expect(orderModel.items.length).toBe(2)
+        expect(orderModel.toJSON()).toStrictEqual({
+            id: order.id,
+            customer_id: customer.id,
+            total: 5.25,
+            items: [{
+                id: orderItemToUpdate.id,
+                product_id: product.id,
+                order_id: orderToUpdate.id,
+                price: orderItemToUpdate.price,
+                quantity: orderItemToUpdate.quantity
+            },
+            {
+                id: orderItemToAdd.id,
+                product_id: product2.id,
+                order_id: orderToUpdate.id,
+                price: orderItemToAdd.price,
+                quantity: orderItemToAdd.quantity
+            }]
+        })
+    })
 })
