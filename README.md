@@ -55,3 +55,13 @@ Normalmento utilizamos quando queremos notificar outros Bounded Context de uma m
 - criar um `Handler` para `Evento`
 - Registrar o `Evento`, juntamente com o `Handler` no `Event Disátcher`
 - Disparanto um evento, é só executar o método `notify/dispatcher/send` do `Event Dispatcher` e todos os `Handlers` registrado no evento serão executados
+
+
+# Modulos em contexto DDD - Como modularizar minha APP?
+- Serve como container nomeados para classes e objetos de domínio
+- Nomear adequadamente, pois modulos não são compartimentos de armazenamento anêmicos ou genéricos
+- Respeitar a liguagem Universal(ubíquo) - modulos devem gritar o que está fazendo/o que é, ou seja modulo não representa o nome do projeto, empresa, marca
+- Um ou mais agregados devem estar juntos se fazem sentido
+- Organizar pelo domínio/subdomínio(contexto) e não pelo tipo de objetos(ou camada)
+- Devem respeitar a mesma divisão quando estão em camadas diferentes
+- Pense em `contexto delimitado(bounded context)` dentro dele os `modulos(pacotes)`, então varios `modulos(pacotes)` podem compor um único contexto delimitado
