@@ -76,6 +76,8 @@ Evans, Eric. DDD(p. 138). Person Educação. Kindle
 - Não conheço a implementação da criação, apenas os dados de entrada
 - Podemos ter dois patterns: Factory metod ou Abstract factory
 
-Client -new(parameters)-|> FACTORY -create-|> product
-       <--product-o
+<code>
+Client -- new(parameters) --|> FACTORY -- create --|> product
+       <-- produc t--o
+</code>
 
