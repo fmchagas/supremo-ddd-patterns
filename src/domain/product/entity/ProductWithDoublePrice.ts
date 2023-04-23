@@ -1,6 +1,6 @@
 import ProductInterface from "./ProductInterface"
 
-export default class Product implements ProductInterface { // é um agreado exite sozinho
+export default class ProductWithDoublePrice implements ProductInterface { // é um agreado exite sozinho
     private _id: string
     private _name: string
     private _price: number
@@ -21,7 +21,7 @@ export default class Product implements ProductInterface { // é um agreado exit
     }
   
     get price(): number {
-      return this._price
+      return this._price * 2
     }
   
     changeName(name: string): void {

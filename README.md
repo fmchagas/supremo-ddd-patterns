@@ -65,3 +65,17 @@ Normalmento utilizamos quando queremos notificar outros Bounded Context de uma m
 - Organizar pelo domínio/subdomínio(contexto) e não pelo tipo de objetos(ou camada)
 - Devem respeitar a mesma divisão quando estão em camadas diferentes
 - Pense em `contexto delimitado(bounded context)` dentro dele os `modulos(pacotes)`, então varios `modulos(pacotes)` podem compor um único contexto delimitado
+
+
+
+# Fabricas(Factories)
+"Desloque a responsabilidade de criar instâncias de objetos complexos e AGREGADOS para um objeto separado, que pode não ter responsabilidade no modelo de domínio, mas ainda faz parte do desing do domínio. Forneça uma interface que encapsule toda a criação complexa e que não exija que o cliente faça referência às classes concretas dos objetos que estão sendo instanciados.
+Crie AGGREGATES inteiros de única vez, reforçando suas invariantes"
+Evans, Eric. DDD(p. 138). Person Educação. Kindle
+
+- Não conheço a implementação da criação, apenas os dados de entrada
+- Podemos ter dois patterns: Factory metod ou Abstract factory
+
+Client -new(parameters)-|> FACTORY -create-|> product
+       <--product-o
+
