@@ -55,3 +55,29 @@ Normalmento utilizamos quando queremos notificar outros Bounded Context de uma m
 - criar um `Handler` para `Evento`
 - Registrar o `Evento`, juntamente com o `Handler` no `Event Disátcher`
 - Disparanto um evento, é só executar o método `notify/dispatcher/send` do `Event Dispatcher` e todos os `Handlers` registrado no evento serão executados
+
+
+# Modulos em contexto DDD - Como modularizar minha APP?
+- Serve como container nomeados para classes e objetos de domínio
+- Nomear adequadamente, pois modulos não são compartimentos de armazenamento anêmicos ou genéricos
+- Respeitar a liguagem Universal(ubíquo) - modulos devem gritar o que está fazendo/o que é, ou seja modulo não representa o nome do projeto, empresa, marca
+- Um ou mais agregados devem estar juntos se fazem sentido
+- Organizar pelo domínio/subdomínio(contexto) e não pelo tipo de objetos(ou camada)
+- Devem respeitar a mesma divisão quando estão em camadas diferentes
+- Pense em `contexto delimitado(bounded context)` dentro dele os `modulos(pacotes)`, então varios `modulos(pacotes)` podem compor um único contexto delimitado
+
+
+
+# Fabricas(Factories)
+"Desloque a responsabilidade de criar instâncias de objetos complexos e AGREGADOS para um objeto separado, que pode não ter responsabilidade no modelo de domínio, mas ainda faz parte do desing do domínio. Forneça uma interface que encapsule toda a criação complexa e que não exija que o cliente faça referência às classes concretas dos objetos que estão sendo instanciados.
+Crie AGGREGATES inteiros de única vez, reforçando suas invariantes"
+Evans, Eric. DDD(p. 138). Person Educação. Kindle
+
+- Não conheço a implementação da criação, apenas os dados de entrada
+- Podemos ter dois patterns: Factory metod ou Abstract factory
+
+<code>
+Client -- new(parameters) --|> FACTORY -- create --|> product
+       <-- produc t--o
+</code>
+
