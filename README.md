@@ -78,6 +78,6 @@ Evans, Eric. DDD(p. 138). Person Educação. Kindle
 
 <code>
 Client -- new(parameters) --|> FACTORY -- create --|> product
-       <-- produc t--o
+       <-- product--o
 </code>
 
