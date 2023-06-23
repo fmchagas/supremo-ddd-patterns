@@ -33,7 +33,7 @@ describe("Unit test list customers use case", () => {
 
         expect(output.customers.length).toBe(2)
         
-        expect(output.customers[0].id).toBe(customer.id)
+        expect(output.customers[0].id).toBe(customer.getId)
         expect(output.customers[0].name).toBe(customer.name)
         expect(output.customers[0].active).toBe(customer.isActive)
         expect(output.customers[0].rewardPoints).toBe(customer.rewardPoints)
@@ -42,7 +42,7 @@ describe("Unit test list customers use case", () => {
         expect(output.customers[0].address.zip).toEqual(customer.address.zip)
         expect(output.customers[0].address.city).toEqual(customer.address.city)
 
-        expect(output.customers[1].id).toBe(customer2.id)
+        expect(output.customers[1].id).toBe(customer2.getId)
         expect(output.customers[1].name).toBe(customer2.name)
         expect(output.customers[1].active).toBe(customer2.isActive)
         expect(output.customers[1].rewardPoints).toBe(customer2.rewardPoints)

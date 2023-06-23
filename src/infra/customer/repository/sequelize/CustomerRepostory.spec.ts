@@ -39,7 +39,7 @@ describe("Customer repository tests", () => {
         const customerModel = await CustomerModel.findOne({ where: { id: "11" } })
 
         expect(customerModel.toJSON()).toStrictEqual({
-            id: customer.id,
+            id: customer.getId,
             name: customer.name,
             active: customer.isActive,
             rewardPoints: customer.rewardPoints,
@@ -68,7 +68,7 @@ describe("Customer repository tests", () => {
         const customerModelUpdated = await CustomerModel.findOne({ where: { id: "11" } })
 
         expect(customerModelUpdated.toJSON()).toStrictEqual({
-            id: customer.id,
+            id: customer.getId,
             name: customer.name,
             active: customer.isActive,
             rewardPoints: customer.rewardPoints,
@@ -88,7 +88,7 @@ describe("Customer repository tests", () => {
 
         customerRepository.create(customer)
 
-        const expectedCustomer = await customerRepository.find(customer.id)
+        const expectedCustomer = await customerRepository.find(customer.getId)
 
         expect(customer).toStrictEqual(expectedCustomer)
         expect(customer.isActive).toBe(true)
@@ -102,7 +102,7 @@ describe("Customer repository tests", () => {
 
         customerRepository.create(customer)
 
-        const expectedCustomer = await customerRepository.find(customer.id)
+        const expectedCustomer = await customerRepository.find(customer.getId)
 
         expect(customer).toStrictEqual(expectedCustomer)
         expect(customer.isActive).toBe(false)

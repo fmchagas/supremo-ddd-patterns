@@ -1,19 +1,25 @@
+import Entity from "../../@shared/entity/EntityAbstract";
+import NotificationError from "../../@shared/notification/NotificationError";
 import Address from "./Address";
 
-export default class Customer{ // é agreado existe sozinho
-   private _id: string
+export default class Customer extends Entity{ // é agreado existe sozinho
    private _name: string;
    private _address!: Address // Relação com VO
    private _active: boolean = false
    private _rewardPoints: number = 0
 
     constructor(id: string, name:string) {
+        super()
         this._id = id
         this._name = name
         this.validate()
+
+        if (this.notification.hasErrors()) {
+            throw new NotificationError(this.notification.errors())
+        }
     }
 
-    get id(): string {
+    get getId(): string {
         return this._id;
     }
 
@@ -47,7 +53,12 @@ export default class Customer{ // é agreado existe sozinho
 
     activate() {
         if(this._address === undefined){
-            throw new Error("Address is mandatory to activate a customer")
+            this.notification.addError({
+                context: "customer",
+                message: "Address is mandatory to activate a customer"
+            })
+            
+            throw new NotificationError(this.notification.errors())
         }
         
         this._active = true;
@@ -60,14 +71,24 @@ export default class Customer{ // é agreado existe sozinho
     changeName(name: string): void {
         this._name = name
         this.validate()
+
+        if (this.notification.hasErrors()) {
+            throw new NotificationError(this.notification.errors())
+        }
     }
     
     validate() {
-        if(this._id.length === 0){
-            throw new Error("Id is required")
+        if(this.id.length === 0){
+            this.notification.addError({
+                context: "customer",
+                message: "Id is required"
+            })
         }
         if(this._name.length === 0){
-            throw new Error("Name is required")
+            this.notification.addError({
+                context: "customer",
+                message: "Name is required"
+            })
         }
     }
 }
