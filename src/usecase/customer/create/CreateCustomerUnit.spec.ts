@@ -53,7 +53,7 @@ describe("Unit test create customer use case", () => {
             }
         }
 
-        expect(usecase.execute(input)).rejects.toThrow("Name is required")
+        expect(usecase.execute(input)).rejects.toThrowError("customer: Name is required")
     })
 
 })

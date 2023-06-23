@@ -22,7 +22,7 @@ describe("Unit test update customer use case", () => {
         const usecase = new UpdateCustomerUseCase(customerRepository)
 
         const input = {
-            id: customer.id,
+            id: customer.getId,
             name: "Fer",
             active: true,
             address: {
@@ -41,7 +41,7 @@ describe("Unit test update customer use case", () => {
         const usecase = new UpdateCustomerUseCase(customerRepository)
 
         const input = {
-            id: customer.id,
+            id: customer.getId,
             name: "Fer",
             active: false,
             address: {

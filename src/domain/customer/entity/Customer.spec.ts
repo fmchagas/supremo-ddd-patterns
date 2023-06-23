@@ -7,14 +7,14 @@ describe("Customer unit tests", () => {
         expect(() =>{
             new Customer("", "Fer")
             
-        }).toThrowError("Id is required")
+        }).toThrowError("customer: Id is required")
     })
 
     it("should throw error when name is empty", () => {
         expect(() =>{
             new Customer("id1", "")
 
-        }).toThrowError("Name is required")
+        }).toThrowError("customer: Name is required")
     })
 
     it("should change name", () => {
@@ -23,6 +23,15 @@ describe("Customer unit tests", () => {
         customer.changeName("Fernando")
 
         expect(customer.name).toBe("Fernando")
+    })
+
+    it("should throw error when change name and it is empty", () => {
+        const customer = new Customer("id1", "Fer")
+
+        expect(() =>{
+            customer.changeName("")
+
+        }).toThrowError("customer: Name is required")
     })
 
     it("should activate customer", () => {
@@ -48,7 +57,7 @@ describe("Customer unit tests", () => {
             const customer = new Customer("id1", "Fer")
             customer.activate()
 
-        }).toThrowError("Address is mandatory to activate a customer")
+        }).toThrowError("customer: Address is mandatory to activate a customer")
     })
 
     it("should add reward points", () => {
@@ -68,7 +77,7 @@ describe("Customer unit tests", () => {
         const address = new Address("Street", "n123", "75801360", "Jataí")
         customer.address = address
 
-        expect(customer.id).toBe("1")
+        expect(customer.getId).toBe("1")
         expect(customer.name).toBe("Fer")
 
         expect(customer.address).toMatchObject(address)

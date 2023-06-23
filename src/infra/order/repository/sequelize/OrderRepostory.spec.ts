@@ -50,7 +50,7 @@ describe("Order repository tests", () => {
 
         const orderItem = new OrderItem("1", product.id, product.price, 3)
 
-        const order = new Order("123", customer.id, [orderItem])
+        const order = new Order("123", customer.getId, [orderItem])
 
         const orderRepository = new OrderRepository()
         await orderRepository.create(order)
@@ -62,7 +62,7 @@ describe("Order repository tests", () => {
         
         expect(orderModel.toJSON()).toStrictEqual({
             id: order.id,
-            customer_id: customer.id,
+            customer_id: customer.getId,
             total: 3.75,
             items: [{
                 id: orderItem.id,
@@ -90,7 +90,7 @@ describe("Order repository tests", () => {
 
         const orderItem = new OrderItem("1", product.id, product.price, 3)
 
-        const order = new Order("123", customer.id, [orderItem])
+        const order = new Order("123", customer.getId, [orderItem])
 
         const orderRepository = new OrderRepository()
         await orderRepository.create(order)
@@ -115,13 +115,13 @@ describe("Order repository tests", () => {
 
         const orderItem = new OrderItem("1", product.id, product.price, 3)
 
-        const order = new Order("123", customer.id, [orderItem])
+        const order = new Order("123", customer.getId, [orderItem])
 
         const orderRepository = new OrderRepository()
         await orderRepository.create(order)
 
         const orderItem2 = new OrderItem("2", product.id, product.price, 1)
-        const order2 = new Order("321", customer.id, [orderItem2])
+        const order2 = new Order("321", customer.getId, [orderItem2])
         await orderRepository.create(order2)
 
         const expectedOrders = await orderRepository.findAll()
@@ -145,13 +145,13 @@ describe("Order repository tests", () => {
 
         const orderItem = new OrderItem("1", product.id, product.price, 300)
 
-        const order = new Order("123", customer.id, [orderItem])
+        const order = new Order("123", customer.getId, [orderItem])
 
         const orderRepository = new OrderRepository(sequelize)
         await orderRepository.create(order)
 
         const orderItemToUpdate = new OrderItem("1", product.id, product.price, 3)
-        const orderToUpdate = new Order("123", customer.id, [orderItemToUpdate])
+        const orderToUpdate = new Order("123", customer.getId, [orderItemToUpdate])
         await orderRepository.update(orderToUpdate)
 
         const orderModel = await OrderModel.findOne({
@@ -163,7 +163,7 @@ describe("Order repository tests", () => {
 
         expect(orderModel.toJSON()).toStrictEqual({
             id: order.id,
-            customer_id: customer.id,
+            customer_id: customer.getId,
             total: 3.75,
             items: [{
                 id: orderItemToUpdate.id,
@@ -191,7 +191,7 @@ describe("Order repository tests", () => {
         productRepository.create(product2)
 
         const orderItem = new OrderItem("1", product.id, product.price, 20)
-        const order = new Order("321", customer.id, [orderItem])
+        const order = new Order("321", customer.getId, [orderItem])
 
         const orderRepository = new OrderRepository(sequelize)
         await orderRepository.create(order)
@@ -199,7 +199,7 @@ describe("Order repository tests", () => {
 
         const orderItemToUpdate = new OrderItem("1", product.id, product.price, 1)
         const orderItemToAdd = new OrderItem("2", product2.id, product2.price, 2)
-        const orderToUpdate = new Order("321", customer.id, [orderItemToUpdate, orderItemToAdd])
+        const orderToUpdate = new Order("321", customer.getId, [orderItemToUpdate, orderItemToAdd])
         await orderRepository.update(orderToUpdate)
 
         const orderModel = await OrderModel.findOne({
@@ -210,7 +210,7 @@ describe("Order repository tests", () => {
         expect(orderModel.items.length).toBe(2)
         expect(orderModel.toJSON()).toStrictEqual({
             id: order.id,
-            customer_id: customer.id,
+            customer_id: customer.getId,
             total: 5.25,
             items: [{
                 id: orderItemToUpdate.id,

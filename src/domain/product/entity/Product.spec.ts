@@ -1,23 +1,33 @@
 import Product from "./Product"
 
 describe("Product unit tests", () => {
+
+    it("should throw error when id and name is empty", () => {       
+        expect(() => {
+            new Product("", "", 1)
+
+        }).toThrow("product: Id is required,product: Name is required")
+    })
     
     it("should throw error when id is empty", () => {       
         expect(() => {
             new Product("", "product-name", 1)
-        }).toThrowError("Id is required")
+
+        }).toThrowError("product: Id is required")
     })
 
     it("should throw error when name is empty", () => {       
         expect(() => {
             new Product("product-id-1", "", 1)
-        }).toThrowError("Name is required")
+
+        }).toThrow("product: Name is required")
     })
 
     it("should throw error when price is negative", () => {       
         expect(() => {
             new Product("product-id-1", "product-name", -1)
-        }).toThrowError("Price must be greater than zero")
+
+        }).toThrow("product: Price must be greater than zero")
     })
 
     it("should change name", () => {    
