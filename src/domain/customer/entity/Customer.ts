@@ -1,5 +1,6 @@
 import Entity from "../../@shared/entity/EntityAbstract";
 import NotificationError from "../../@shared/notification/NotificationError";
+import CustomerValidatorFactory from "../factory/CustomerValidatorFactory";
 import Address from "./Address";
 
 export default class Customer extends Entity{ // é agreado existe sozinho
@@ -13,10 +14,6 @@ export default class Customer extends Entity{ // é agreado existe sozinho
         this._id = id
         this._name = name
         this.validate()
-
-        if (this.notification.hasErrors()) {
-            throw new NotificationError(this.notification.errors())
-        }
     }
 
     get getId(): string {
@@ -71,24 +68,13 @@ export default class Customer extends Entity{ // é agreado existe sozinho
     changeName(name: string): void {
         this._name = name
         this.validate()
-
-        if (this.notification.hasErrors()) {
-            throw new NotificationError(this.notification.errors())
-        }
     }
     
     validate() {
-        if(this.id.length === 0){
-            this.notification.addError({
-                context: "customer",
-                message: "Id is required"
-            })
-        }
-        if(this._name.length === 0){
-            this.notification.addError({
-                context: "customer",
-                message: "Name is required"
-            })
+        CustomerValidatorFactory.create().validate(this)
+
+        if (this.notification.hasErrors()) {
+            throw new NotificationError(this.notification.errors())
         }
     }
 }
