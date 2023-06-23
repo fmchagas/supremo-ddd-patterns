@@ -2,6 +2,7 @@ import express, { Request, Response } from "express"
 import CreateCustomerUseCase from "../../../usecase/customer/create/CreateCustomerUseCase"
 import ListCustomerUseCase from "../../../usecase/customer/list/ListCustomerUseCase"
 import CustomerRepository from "../../customer/repository/sequelize/CustomerRepository"
+import CustomerPresenter from "../presenters/CustomerPresenter"
 
 
 export const customerRoute = express.Router()
@@ -33,8 +34,13 @@ customerRoute.post('/', async (req: Request, res: Response) => {
 customerRoute.get('/', async (req: Request, res: Response) => {
 
     const usecase = new ListCustomerUseCase(new CustomerRepository())
-
     const customers = await usecase.execute()
+    
+    // O retorno do DTO <> Resultado API
+    // Tudo é JSON. E se eu quiser o resultado em XML?
 
-    res.status(200).send(customers)
+    res.format({
+        json: async () => res.send(customers),
+        xml: async () => res.send(CustomerPresenter.listXML(customers))
+    })
 })
